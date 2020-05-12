@@ -39,13 +39,9 @@ class Evaluacion_robusta():
             print(score_val)
        # print(promedio/len(score_val))
        # return "El promedio de estos atributos es: ",promedio
-    def validacion_cruzada(datos,atributos,N_Exp,Cv):
-        y = datos.loc[:,'Survived']
+    def validacion_cruzada(datos,atributos,variable_predictora,N_Exp,Cv):
+        y = datos.loc[:,variable_predictora]
         X_train,X_test,y_train,y_test = model_selection.train_test_split(atributos,y,test_size=0.2,random_state=123)
         score_val = cross_val_score(RandomForestClassifier(n_estimators=N_Exp,random_state=0),X=X_train,y=y_train,cv=Cv,scoring='balanced_accuracy')
-        ac = 0
-        for j in range(len(score_val)):
-            score = ac + score_val[j]
-            ac = score
-        promedio = score/len(score_val)
+        promedio = score_val.mean()
         return promedio
