@@ -6,6 +6,7 @@ import evaluacionRobusta as promedio
 datos = pd.read_csv('titanic.csv',sep=",")
 variables = datos.columns.tolist()
 variable_predictora = variables[len(variables)-1]
+#variable_predictora = 'Survived'
 
 def SFS(datos, variable_predictora, D):
     variables = datos.columns.tolist()
