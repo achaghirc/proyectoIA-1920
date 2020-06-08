@@ -4,10 +4,11 @@ import pandas as pd
 import evaluacionRobusta as promedio
 
 datos = pd.read_csv('titanic.csv',sep=",")
+variables = datos.columns.tolist()
+variable_predictora = variables[len(variables)-1]
 
-def SFS(datos, D):
+def SFS(datos, variable_predictora, D):
     variables = datos.columns.tolist()
-    variable_predictora = variables[len(variables)-1]
     variables.remove(variable_predictora)
     k=0
     solucion_actual = []
@@ -39,7 +40,7 @@ def calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual)
         else:
             solucion_temporal.remove(variables[i])
     return mejor_variable
-print(SFS(datos,4))
+print(SFS(datos, variable_predictora, 4))
 
 
 
