@@ -29,7 +29,7 @@ class Evaluacion_robusta():
             X_train,X_test,y_train,y_test = model_selection.train_test_split(atributos,y,test_size=0,random_state=0)
        # datos_entrenados = svm.SVC(kernel='linear', C=1).fit(X_train,y_train)
        # for i in range(N_Exp):
-            clasifier = RandomForestClassifier(n_estimators=300,random_state=0)
+            classifier = RandomForestClassifier(n_estimators=300,random_state=0)
             
             score_val = cross_val_score(estimator=classifier,X=X_train,y=y_train,cv=Cv,scoring='balanced_accuracy')
        #     ac = 0
