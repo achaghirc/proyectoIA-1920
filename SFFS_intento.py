@@ -21,7 +21,7 @@ def SFFS(datos, variable_predictora):
     añadidos = []
     eliminados = []
     print('{:<10}{:>80} {:>10}'.format('Soluciones','Rendimiento','Tamaño'))
-    while (len(añadidos) != len(variables) and k != 10):
+    while #(len(añadidos) != len(variables) and k != 10):
         # Añadir Mejor Variable
         variableElegida = calcular_mejor_variable(datos, variables, variable_predictora, solucionActual)
         variables.remove(variableElegida)
@@ -32,20 +32,22 @@ def SFFS(datos, variable_predictora):
         añadidos.append[variableElegida]
         
         # Eliminar Peor Variable
-       solucion = calcularPeorVariable(solucionActual, gananciaSolucionActual)
-       atributosDeLaSolucionNueva = datos[solucion]
-       gananciaNuevoConjunto = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionNueva, 15, 10)
-        
-        
+        solucionNueva, eliminados, k = calcularPeorVariable(solucionActual, gananciaSolucionActual, eliminados, k)
+        atributosDeLaSolucionNueva = datos[solucionNueva]
+        gananciaSolucionNueva = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionNueva, 15, 10)
+        print('{}{:>80.2f}{:>10}'.format(solucionNueva, gananciaSolucionNueva, len(solucionNueva)))
+    return solucionNueva, gananciaSolucionNueva
 
-def calcularPeorVariable(solucionActual, gananciaSolucionActual):
+def calcularPeorVariable(solucionActual, gananciaSolucionActual,eliminados, k):
     tam = len(solucionActual)
     for i in range(tam):
         solucionTemporal = solucionActual[:]
         solucionTemporal.remove(solucionTemporal[i])
         atributosDeLaSolucionTemp = datos[solucionTemporal]
-        gananciaSolucionTemp = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionTemp, 15, 10)
+        gananciaSolucionTemp = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionTemp, 20, 10)
+        k +=1
         if(gananciaSolucionTemp>gananciaSolucionActual):
+            k=0
             eliminados.append(solucionTemporal[i])
             solucionActual = solucionTemporal[:]
             gananciaSolucionActual = gananciaSolucionTemp
