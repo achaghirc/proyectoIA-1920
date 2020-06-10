@@ -22,8 +22,7 @@ def SFFS(datos, variable_predictora):
     eliminados = []
     tam = len(variables)
     print('{:<10}{:>80} {:>10}'.format('Soluciones','Rendimiento','Tamaño'))
-    while len(añadidos) != tam-1 and k != 10:
-      
+    while len(añadidos) != tam-1:
         # Añadir Mejor Variable
         variableElegida, añadidos = calcular_mejor_variable(datos, variables, solucionActual, añadidos)
         variables.remove(variableElegida)
@@ -51,7 +50,6 @@ def calcularPeorVariable(solucionActual, gananciaSolucionActual,eliminados, k):
         if(gananciaSolucionTemp>gananciaSolucionActual):
             k=0
             eliminados.append(solucionTemporal[i])
-#            solucionActual = solucionTemporal[:]
             gananciaSolucionActual = gananciaSolucionTemp     
         if k>=10:
             break
