@@ -21,24 +21,23 @@ def SFFS(datos, variable_predictora):
     añadidos = []
     eliminados = []
     tam = len(variables)
-    print("Tamaño Variables:")
-    print(tam)
     print('{:<10}{:>80} {:>10}'.format('Soluciones','Rendimiento','Tamaño'))
-    while k != 10:
-        while len(añadidos) != tam-1:
+    while len(añadidos) != tam-1 and k != 10:
+      
         # Añadir Mejor Variable
-            variableElegida, añadidos = calcular_mejor_variable(datos, variables, solucionActual, añadidos)
-            variables.remove(variableElegida)
-            solucionActual.append(variableElegida)
-            atributosDeLaSolucion = datos[solucionActual]
-            gananciaSolucionActual = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucion, 15, 10)
-            print('{}{:>80.2f}{:>10}'.format(solucionActual, gananciaSolucionActual, len(solucionActual)))
-           
+        variableElegida, añadidos = calcular_mejor_variable(datos, variables, solucionActual, añadidos)
+        variables.remove(variableElegida)
+        solucionActual.append(variableElegida)
+        atributosDeLaSolucion = datos[solucionActual]
+        gananciaSolucionActual = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucion, 15, 10)
+        print('{}{:>80.2f}{:>10}'.format(solucionActual, gananciaSolucionActual, len(solucionActual)))
+        
         # Eliminar Peor Variable
-        solucionNueva, eliminados, k = calcularPeorVariable(solucionActual, gananciaSolucionActual, eliminados, k)
-        atributosDeLaSolucionNueva = datos[solucionNueva]
-        gananciaSolucionNueva = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionNueva, 15, 10)
-        print('{}{:>80.2f}{:>10}'.format(solucionNueva, gananciaSolucionNueva, len(solucionNueva)))
+        if(len(solucionActual)>2):
+            solucionNueva, eliminados, k = calcularPeorVariable(solucionActual, gananciaSolucionActual, eliminados, k)
+            atributosDeLaSolucionNueva = datos[solucionNueva]
+            gananciaSolucionNueva = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionNueva, 15, 10)
+            print('{}{:>80.2f}{:>10}'.format(solucionNueva, gananciaSolucionNueva, len(solucionNueva)))
     return solucionNueva, gananciaSolucionNueva
 
 def calcularPeorVariable(solucionActual, gananciaSolucionActual,eliminados, k):
@@ -49,7 +48,6 @@ def calcularPeorVariable(solucionActual, gananciaSolucionActual,eliminados, k):
         atributosDeLaSolucionTemp = datos[solucionTemporal]
         gananciaSolucionTemp = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionTemp, 20, 10)
         k +=1
-        print("k:")
         if(gananciaSolucionTemp>gananciaSolucionActual):
             k=0
             eliminados.append(solucionTemporal[i])
