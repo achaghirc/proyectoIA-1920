@@ -49,13 +49,15 @@ def calcularPeorVariable(solucionActual, gananciaSolucionActual,eliminados, k):
         atributosDeLaSolucionTemp = datos[solucionTemporal]
         gananciaSolucionTemp = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionTemp, 20, 10)
         k +=1
+        print("k:")
         if(gananciaSolucionTemp>gananciaSolucionActual):
             k=0
             eliminados.append(solucionTemporal[i])
-            solucionActual = solucionTemporal[:]
+#            solucionActual = solucionTemporal[:]
             gananciaSolucionActual = gananciaSolucionTemp     
         if k>=10:
             break
+    solucionActual = solucionTemporal[:]
     return solucionActual, eliminados, k
         
 
