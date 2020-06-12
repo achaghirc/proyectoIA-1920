@@ -14,6 +14,7 @@ def SFS(datos, variable_predictora, D):
     variables.remove(variable_predictora)
     k=0
     solucion_actual = []
+    Lista = []
     print('{:<10}{:>80} {:>10}'.format('Soluciones','Rendimiento','Tamaño'))
     while k<D:
         variable_elegida = calcular_mejor_variable(datos, variables, variable_predictora, solucion_actual)
@@ -23,6 +24,7 @@ def SFS(datos, variable_predictora, D):
         ganancia_solucion_actual = promedio.evaluacionRobusta.validacionCruzada(datos,atributos_de_la_solucion, 15, 10)
         print('{}{:>80.2f}{:>10}'.format(solucion_actual, ganancia_solucion_actual, len(solucion_actual)))
         k += 1
+        Lista.append(solucion_actual[:])
     return solucion_actual,ganancia_solucion_actual
         
         
