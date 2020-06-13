@@ -2,8 +2,10 @@
 
 import pandas as pd
 import evaluacionRobusta as promedio
+import operator
+import imprimir_datos_ordenados as impdatos
 
-datos = pd.read_csv('titanic.csv',sep=",")
+datos = pd.read_csv('C:/Users/amine/OneDrive - UNIVERSIDAD DE SEVILLA/TERCERO DE CARRERA/Segundo Cuatrimestre/IA/ProyectoIA-1920/proyectoIA-1920/titanic.csv')
 variables = datos.columns.tolist()
 #variable_predictora = variables[len(variables)-1]
 variable_predictora = 'Survived'
@@ -15,20 +17,23 @@ def SFS(datos, variable_predictora, D):
     k=0
     solucion_actual = []
     Lista = []
-    print('{:<10}{:>80} {:>10}'.format('Soluciones','Rendimiento','Tamaño'))
+    Lista_ganancias = []
+    diccionario_resultado = {}
     while k<D:
         variable_elegida = calcular_mejor_variable(datos, variables, variable_predictora, solucion_actual)
         variables.remove(variable_elegida)
         solucion_actual.append(variable_elegida)
         atributos_de_la_solucion = datos[solucion_actual]
         ganancia_solucion_actual = promedio.evaluacionRobusta.validacionCruzada(datos,atributos_de_la_solucion, 15, 10)
-        print('{}{:>80.2f}{:>10}'.format(solucion_actual, ganancia_solucion_actual, len(solucion_actual)))
-        k += 1
+#        print('{}{:>80.2f}{:>10}'.format(solucion_actual, ganancia_solucion_actual, len(solucion_actual)))
+        
         Lista.append(solucion_actual[:])
-    return solucion_actual,ganancia_solucion_actual
-        
-        
-        
+        Lista_ganancias.append(ganancia_solucion_actual)
+        diccionario_resultado[ganancia_solucion_actual] = Lista[k]
+        k += 1
+    return impdatos.Imprimir.datos_ordenados(diccionario_resultado)
+
+
 def calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual):
     tam = len(variables)
     ac = 0
