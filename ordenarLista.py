@@ -7,34 +7,35 @@ Created on Fri Jun 12 00:44:19 2020
 import pandas as pd
 import evaluacionRobusta as promedio
 
+
 datos = pd.read_csv('titanic.csv',sep=",")
-Lista = [['Initial'], ['Initial', 'SibSp'], ['Initial', 'SibSp', 'Deck'], ['Initial', 'SibSp', 'Deck', 'Embarked']]
+Lista = [['Initial'], ['Initial'], ['Initial', 'SibSp'], ['Initial', 'SibSp', 'Deck'], ['Initial', 'SibSp', 'Deck', 'Embarked']]
 
 
 def ordenarLista(datos, Lista):
     k = 0
-    tam = len(Lista)
+    Lista2 = []
+    for i in Lista:
+        if i not in Lista2:
+            Lista2.append(i) 
+    tam = len(Lista2)
     while(k != tam-1):
-        primerValor = Lista[k]
+        primerValor = Lista2[k]
         atributosPrimerValor = datos[primerValor]
         ganPrimerValor = promedio.evaluacionRobusta.validacionCruzada(datos,atributosPrimerValor, 15, 10)
-        print("Primer Valor:" + str(primerValor))
-        print("Ganancia Primer Valor:" + str(ganPrimerValor))
         
-        segundoValor = Lista[k+1]
+        segundoValor = Lista2[k+1]
         atributosSegundoValor = datos[segundoValor]
         ganSegundoValor = promedio.evaluacionRobusta.validacionCruzada(datos,atributosSegundoValor, 15, 10)
-        print("Primer Valor:" + str(segundoValor))
-        print("Ganancia Primer Valor:" + str(ganSegundoValor))
         
         if(ganPrimerValor>ganSegundoValor):
             k+=1
         else:
-            Lista.remove(primerValor)
-            Lista.remove(segundoValor)
-            Lista.insert(k,segundoValor)
-            Lista.insert(k+1, primerValor)
+            Lista2.remove(primerValor)
+            Lista2.remove(segundoValor)
+            Lista2.insert(k,segundoValor)
+            Lista2.insert(k+1, primerValor)
             k=0
-    return Lista
+    return Lista2
 
 print("Lista:" + str(ordenarLista(datos, Lista)))

@@ -13,23 +13,6 @@ variables = datos.columns.tolist()
 variable_predictora = 'Survived'
 solucionActual = ['Initial', 'SibSp', 'Deck', 'Fare_cat','Title', 'Sex']
 
-      
-def calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual):
-    tam = len(variables)
-    ac = 0
-    solucion_temporal = solucion_actual
-    for i in range(tam-1):
-        solucion_temporal.append(variables[i])
-        atributos_a_probar = datos[solucion_temporal]
-        ganancia_del_atributo = promedio.evaluacionRobusta.validacionCruzada(datos,atributos_a_probar,20,10)
-        if(ganancia_del_atributo>ac):
-            mejor_variable = variables[i]
-            ac = ganancia_del_atributo
-            solucion_temporal.remove(variables[i])
-        else:
-            solucion_temporal.remove(variables[i])
-    return mejor_variable
-
 def calcularPeorVariable(solucionActual, gananciaSolucionActual):
     tam = len(solucionActual)
     for i in range(tam):
