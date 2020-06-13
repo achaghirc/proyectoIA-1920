@@ -26,7 +26,6 @@ def SFS(datos, variable_predictora, D):
         atributos_de_la_solucion = datos[solucion_actual]
         ganancia_solucion_actual = promedio.evaluacionRobusta.validacionCruzada(datos,atributos_de_la_solucion, 15, 10)
 #        print('{}{:>80.2f}{:>10}'.format(solucion_actual, ganancia_solucion_actual, len(solucion_actual)))
-        
         Lista.append(solucion_actual[:])
         Lista_ganancias.append(ganancia_solucion_actual)
         diccionario_resultado[ganancia_solucion_actual] = Lista[k]
