@@ -1,8 +1,4 @@
-"""
-Created on Fri Jun 12 18:44:19 2020
 
-@author: Amine
-"""
 import operator
 
 class Imprimir():
