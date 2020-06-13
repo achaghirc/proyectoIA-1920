@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jun  8 17:40:54 2020
-
-@author: Alvaro
-"""
 
 import pandas as pd
 import evaluacionRobusta as promedio
+import imprimir_datos_ordenados as impdatos
+import operator
 
 datos = pd.read_csv('titanic.csv',sep=",")
 variables = datos.columns.tolist()
@@ -21,7 +18,11 @@ def SFFS(datos, variable_predictora):
     añadidos = []
     eliminados = []
     tam = len(variables)
-    print('{:<10}{:>80} {:>10}'.format('Soluciones','Rendimiento','Tamaño'))
+    i=0
+#    print('{:<10}{:>80} {:>10}'.format('Soluciones','Rendimiento','Tamaño'))
+    Lista = []
+    Lista_ganancias = []
+    diccionario_resultado = {}
     while len(añadidos) != tam-1:
         # Añadir Mejor Variable
         variableElegida, añadidos = calcular_mejor_variable(datos, variables, solucionActual, añadidos)
@@ -29,15 +30,22 @@ def SFFS(datos, variable_predictora):
         solucionActual.append(variableElegida)
         atributosDeLaSolucion = datos[solucionActual]
         gananciaSolucionActual = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucion, 15, 10)
-        print('{}{:>80.2f}{:>10}'.format(solucionActual, gananciaSolucionActual, len(solucionActual)))
-        
+        Lista.append(solucionActual[:])
+        Lista_ganancias.append(gananciaSolucionActual)
+        diccionario_resultado[gananciaSolucionActual] = Lista[i]
+        i+=1
         # Eliminar Peor Variable
         if(len(solucionActual)>2):
             solucionNueva, eliminados, k = calcularPeorVariable(solucionActual, gananciaSolucionActual, eliminados, k)
             atributosDeLaSolucionNueva = datos[solucionNueva]
             gananciaSolucionNueva = promedio.evaluacionRobusta.validacionCruzada(datos,atributosDeLaSolucionNueva, 15, 10)
-            print('{}{:>80.2f}{:>10}'.format(solucionNueva, gananciaSolucionNueva, len(solucionNueva)))
-    return solucionNueva, gananciaSolucionNueva
+            if(solucionNueva != solucionActual):
+                Lista.append(solucionNueva[:])
+                Lista_ganancias.append(gananciaSolucionNueva)
+                diccionario_resultado[gananciaSolucionActual] = Lista[i]
+                i+=1
+
+    return impdatos.Imprimir.datos_ordenados(diccionario_resultado)
 
 def calcularPeorVariable(solucionActual, gananciaSolucionActual,eliminados, k):
     tam = len(solucionActual)
@@ -73,6 +81,13 @@ def calcular_mejor_variable(datos, variables, solucion_actual, añadidos):
             solucion_temporal.remove(variables[i])    
     añadidos.append(mejor_variable)
     return mejor_variable, añadidos
+
+
+def datos_ordenados(diccionario_resultado):
+    diccionario_sorted = sorted(diccionario_resultado.items(),key=operator.itemgetter(0),reverse=True)
+    print('{:<10}{:>100} {:>30}'.format('Soluciones','Rendimiento','Tamaño'))
+    for element in diccionario_sorted:       
+        print(element[1], ' con una ganancia de: ',element[0], ' con tamaño:', len(element[1]))
 
 print(SFFS(datos, variable_predictora))
     

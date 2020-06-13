@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Jun 12 00:44:19 2020
-
-@author: Alvaro
-"""
 import pandas as pd
 import evaluacionRobusta as promedio
 
