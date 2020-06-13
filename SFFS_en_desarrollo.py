@@ -23,11 +23,11 @@ class SFFS():
         Lista_ganancias = []
         diccionario_resultado = {}
         while len(añadidas) < tam-1: 
-            variable_elegida = SFFS.calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual, 10, 10)
+            variable_elegida = SFFS.calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual, 15, 10)
             variables.remove(variable_elegida)
             solucion_actual.append(variable_elegida)
             atributos_solucion = datos[solucion_actual]
-            ganancia_solucion_actual = promedio.evaluacionRobusta.validacionCruzada(datos,atributos_solucion, 10, 10)
+            ganancia_solucion_actual = promedio.evaluacionRobusta.validacionCruzada(datos,atributos_solucion, 15, 10)
             añadidas.append(variable_elegida)
             Lista.append(solucion_actual[:])
             Lista_ganancias.append(ganancia_solucion_actual)
