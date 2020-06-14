@@ -2,10 +2,9 @@
 
 import pandas as pd
 import evaluacionRobusta as promedio
-import operator
 import imprimir_datos_ordenados as impdatos
 
-datos = pd.read_csv('C:/Users/amine/OneDrive - UNIVERSIDAD DE SEVILLA/TERCERO DE CARRERA/Segundo Cuatrimestre/IA/ProyectoIA-1920/proyectoIA-1920/titanic.csv')
+datos = pd.read_csv('titanic.csv')
 variables = datos.columns.tolist()
 #variable_predictora = variables[len(variables)-1]
 variable_predictora = 'Survived'
