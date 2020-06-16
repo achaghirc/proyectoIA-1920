@@ -19,7 +19,8 @@ class Imprimir():
                 diccionario_sorted.remove(elemento)
                 
         for element in diccionario_sorted:       
+            print('\n=============================================================================')
             print(element[1], ' con una ganancia de: ',element[0], ' con tamaño ',len(element[1]))
-            
+            print('=============================================================================\n')
             
 #    print(datos_ordenados(diccionario_resultado))

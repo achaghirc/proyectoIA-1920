@@ -25,4 +25,4 @@ N_Exp = 13
 Cv=10
 #print(e.Evaluacion_robusta.validacion_cruzada(datos,dat,variable_predictora,N_Exp,Cv))
 #print(sffs.SFFS.calcular_peor_variable(datos,sfsSelected,variable_predictora))
-print(sffs.SFFS.SFFS(datos,variable_predictora,N_Exp,Cv))
+print(sffs.SFFS.SFFS(datos,variable_predictora))
