@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import pandas 
 import evaluacion_robusta_variables as promedio
 import imprimir_datos_ordenados as impdatos
 
@@ -21,6 +20,8 @@ class SFFS():
         Lista = []
         Lista_ganancias = []
         diccionario_resultado = {}
+        i = 1
+        print("Traza:")
         while len(añadidas) < tam-1: 
             variable_elegida = SFFS.calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual, 15, 10)
             variables.remove(variable_elegida)
@@ -33,8 +34,12 @@ class SFFS():
                 Lista_ganancias.append(ganancia_solucion_actual)
                 diccionario_resultado[ganancia_solucion_actual] = Lista[k]
                 k += 1
+                print(str(i)+ "." + str(solucion_actual))
+                i+=1
             if(len(solucion_actual)>2):
                 solucion_nueva,nueva_ganancia,peor_variable = SFFS.proceso_de_eliminacion(datos, solucion_actual, variable_predictora, 15, 10, ganancia_solucion_actual,eliminadas,k)
+                print(str(i)+ "." + str(solucion_nueva))
+                i+=1
                 if(nueva_ganancia > ganancia_solucion_actual):
                     ganancia_solucion_actual = nueva_ganancia
                     solucion_actual.remove(peor_variable)
@@ -46,22 +51,22 @@ class SFFS():
         return impdatos.Imprimir.datos_ordenados(diccionario_resultado)
      
     def proceso_de_eliminacion(datos,solucion_actual,variable_predictora,N_Exp,CV,ganancia_solucion_actual,eliminadas,k):
-        tam = len(solucion_actual)
-        for i in range(tam-1):
+        tam = len(solucion_actual)       
+        for i in range(tam):
             solucion_temporal = solucion_actual[:]
             peor_variable = solucion_temporal[i]
             solucion_temporal.remove(solucion_temporal[i])
             atributos_de_la_solucion_temp = datos[solucion_temporal]
             ganancia_solucion_temp = promedio.evaluacion_robusta.validacion_cruzada(datos,atributos_de_la_solucion_temp, 15, 10)
-            k +=1
+            k += 1        
             if(peor_variable not in eliminadas):
                 if(ganancia_solucion_temp>ganancia_solucion_actual):
                     k=0
-                    ganancia_solucion_actual = ganancia_solucion_temp     
+                    ganancia_solucion_actual = ganancia_solucion_temp
                 if k>=10:
                     break
-        solucionActual = solucion_temporal[:]
-        return solucionActual,ganancia_solucion_actual,peor_variable
+        solucion_actual = solucion_temporal[:]
+        return solucion_actual,ganancia_solucion_actual,peor_variable
         
     def calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual,N_Exp,CV):
         tam = len(variables)
@@ -76,7 +81,7 @@ class SFFS():
                 ac = ganancia_del_atributo
             solucion_temporal.remove(variables[i])
         return mejor_variable
-                
+"""            
     def calcular_peor_variable(datos,solucion_actual,variable_predictora,N_Exp,CV):
         tam = len(solucion_actual)
         ac = 1 ##Porque como maximo el valor de la ganancia puede ser 1
@@ -90,5 +95,5 @@ class SFFS():
                 ac = ganancia_atributo
             solucion_temporal.remove(solucion_actual[i])
         return peor_variable
-
+"""
 #    print(SFFS(datos, variable_predictora))

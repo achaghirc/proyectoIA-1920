@@ -7,7 +7,8 @@ class Imprimir():
   
     def datos_ordenados(diccionario_resultado):
         diccionario_sorted = sorted(diccionario_resultado.items(),key=operator.itemgetter(0),reverse=True)
-        print('{:<10}{:>100} {:>30}'.format('Soluciones','Rendimiento','Tamaño'))
+#        print('{:<10}{:>100} {:>30}'.format('Soluciones','Rendimiento','Tamaño'))
+        print('\n Solución:')
         Lista = []
         ListaPrueba = diccionario_sorted[:]
         tam = len(ListaPrueba)
@@ -19,8 +20,7 @@ class Imprimir():
                 diccionario_sorted.remove(elemento)
                 
         for element in diccionario_sorted:       
-            print('\n=============================================================================')
+            print('===============================================================================================================================')
             print(element[1], ' con una ganancia de: ',element[0], ' con tamaño ',len(element[1]))
-            print('=============================================================================\n')
             
 #    print(datos_ordenados(diccionario_resultado))
