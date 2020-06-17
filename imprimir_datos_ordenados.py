@@ -9,6 +9,7 @@ class Imprimir():
         diccionario_sorted = sorted(diccionario_resultado.items(),key=operator.itemgetter(0),reverse=True)
 #        print('{:<10}{:>100} {:>30}'.format('Soluciones','Rendimiento','Tamaño'))
         print('\n Solución:')
+        print(diccionario_sorted)
         Lista = []
         ListaPrueba = diccionario_sorted[:]
         tam = len(ListaPrueba)

@@ -20,7 +20,7 @@ while archivo != '' and eleccion != '':
         print('Has introducido un nombre de archivo incorrecto, vuelve a intentarlo con las opciones indicadas')
         break
     if eleccion == 'SFFS':
-        print('Ejecutando SFFS')
+        print('Ejecutando SFFS...')
         print(SFFS.algoritmo_sffs(datos,variable_predictora))
         break
     elif eleccion == 'SFS': 
