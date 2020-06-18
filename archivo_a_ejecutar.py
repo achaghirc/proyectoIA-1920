@@ -5,9 +5,19 @@ Created on Wed Apr 29 19:46:49 2020
 @author: amine
 """
 import pandas
-from SFFS import SFFS
+from SFFS_Final import SFFS
 from SFS import SFS
 
+"""
+    
+1. Ejecutar el archivo, y seguir las introducciones. 
+    
+   1.1 En la primera entrada introducir cual de los dos metodos se desea ejecutar SFS o SFFS 
+   1.2 En la segunda entrada seleccionar uno de los dos archivos csv a elegir entre titanic.csv y BreastCancerDataset.csv
+   
+   --> Se mostrara la traza de ejecucion del algoritmo en el caso de SFFS y al final la solucion guardada.
+    
+"""
 eleccion = input('¿Qué algoritmo quieres ejecutar SFS o SFFS?, introduce cuál:\n')
 archivo = input('Introduce el nombre del archivo ( Puede ser titanic.csv o BreastCancerDataset.csv): \n')
 
