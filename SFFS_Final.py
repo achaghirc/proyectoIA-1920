@@ -56,11 +56,16 @@ class SFFS():
         print('Lista de añadidas ', añadidas)
         print('Lista de eliminadas ', eliminadas,'\n')
         
+        diccionario_archivo = {} 
         for i in range(len(lista_solucion)):
             print('Solucion ',lista_solucion[i],' con ganancia ', lista_ganancia[i], ' con tamaño', len(lista_solucion[i]))
+            ganancia = lista_ganancia[i]
+            diccionario_archivo[ganancia] = lista_solucion[i]
         print('Fin de la Traza.')
-        return Imprimir.datos_ordenados(diccionario_resultado)
-    
+        archivo_html = Imprimir.mostrar_datos_en_html(diccionario_archivo)
+        tabla = Imprimir.datos_ordenados(diccionario_resultado)
+        return tabla,archivo_html
+        
     def calcular_peor_variable(datos,variable_predictora,solucion_actual,eliminadas):
         tam = len(solucion_actual)
         solucion_temporal = solucion_actual[:]

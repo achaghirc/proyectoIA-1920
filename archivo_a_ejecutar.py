@@ -29,10 +29,23 @@ while archivo != '' and eleccion != '':
     else:
         print('Has introducido un nombre de archivo incorrecto, vuelve a intentarlo con las opciones indicadas')
         break
-    if eleccion == 'SFFS':
-        print('Ejecutando SFFS...')
-        print(SFFS.algoritmo_sffs(datos,variable_predictora))
+    if eleccion == 'SFFS' and archivo == 'titanic.csv':
+        print('Ejecutando SFFS titanic.csv...')
+        tabla,archivo_html = SFFS.algoritmo_sffs(datos,variable_predictora)
+        archivo = open('resultados_titanic.html','w')
+        archivo.write(archivo_html)
+        archivo.close()
+        print(tabla)
         break
+    elif eleccion == 'SFFS' and archivo == 'BreastCancerDataset.csv':
+        print('Ejecutando SFFS con BreastCancerDataset.csv...')
+        tabla,archivo_html = SFFS.algoritmo_sffs(datos,variable_predictora)
+        archivo = open('resultados_BreastCancer.html','w')
+        archivo.write(archivo_html)
+        archivo.close()
+        print(tabla)
+        break
+    
     elif eleccion == 'SFS': 
         D = input('Seleccione la cantidad de variables que desea probar (Si no especifica nada se probarán todas)\n')
         if D == '':
