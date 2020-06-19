@@ -34,10 +34,16 @@ while archivo != '' and eleccion != '':
         print(SFFS.algoritmo_sffs(datos,variable_predictora))
         break
     elif eleccion == 'SFS': 
-        print('Ejecutando SFS')
-        D = len(variables)-2 #TODAS LAS ITERACIONES --> Excluyendo la variable resultado. 
-        print(SFS.algoritmo_sfs(datos,variable_predictora,D))
-        break
+        D = input('Seleccione la cantidad de variables que desea probar (Si no especifica nada se probarán todas)\n')
+        if D == '':
+            print('Ejecutando SFS con todas las variables...')
+            D = len(variables)-2 #TODAS LAS ITERACIONES --> Excluyendo la variable resultado. 
+            print(SFS.algoritmo_sfs(datos,variable_predictora,D))
+            break
+        else: 
+            print('Ejecutando SFS con el valor D introducido...')
+            print(SFS.algoritmo_sfs(datos,variable_predictora,int(D)))
+            break
     else:
         print('Has introducido un nombre de algoritmo incorrecto, vuelve a intentarlo las opciones son SFFS o SFS')
         break

@@ -18,6 +18,8 @@ class SFFS():
         eliminadas = []
         diccionario_resultado = {}
         k = 0
+        lista_solucion = []
+        lista_ganancia = []
         print('Mostrando Traza ...')
         while len(añadidas) < len(variables): 
             mejor_variable,mejor_solucion_temporal,rendimiento = SFFS.calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual,15,10,añadidas)
@@ -25,6 +27,8 @@ class SFFS():
             añadidas.append(mejor_variable)
             print('La solucion antes de eliminar es ',solucion_actual,'con ganancia de ',rendimiento)
             if(len(solucion_actual)<=2):
+                lista_solucion.append(solucion_actual[:])
+                lista_ganancia.append(rendimiento)
                 diccionario_resultado[rendimiento] = solucion_actual[:]
                 k += 1
             if(len(solucion_actual)>2):
@@ -36,8 +40,12 @@ class SFFS():
                     rendimiento = nuevo_rendimiento
                     eliminadas.append(peor_variable)
                     diccionario_resultado[rendimiento] = solucion_actual[:]
+                    lista_solucion.append(solucion_actual[:])
+                    lista_ganancia.append(rendimiento)
                     print('Solucion tras eliminar es ',solucion_actual,'con ganancia de ',rendimiento,'\n')
                 else:    
+                    lista_solucion.append(solucion_actual[:])
+                    lista_ganancia.append(rendimiento)
                     diccionario_resultado[rendimiento] = solucion_actual[:]
                     print('Solucion sin eliminar es ',solucion_actual,'con ganancia de ',rendimiento,'\n')
                     k += 1
@@ -46,7 +54,10 @@ class SFFS():
                     print('El programa ha terminado condicion de parada cumplida',k)
                     break
         print('Lista de añadidas ', añadidas)
-        print('Lista de eliminadas ', eliminadas)
+        print('Lista de eliminadas ', eliminadas,'\n')
+        
+        for i in range(len(lista_solucion)):
+            print('Solucion ',lista_solucion[i],' con ganancia ', lista_ganancia[i], ' con tamaño', len(lista_solucion[i]))
         print('Fin de la Traza.')
         return Imprimir.datos_ordenados(diccionario_resultado)
     
