@@ -30,7 +30,7 @@ while archivo != '' and eleccion != '':
         print('Has introducido un nombre de archivo incorrecto, vuelve a intentarlo con las opciones indicadas')
         break
     if eleccion == 'SFFS' and archivo == 'titanic.csv':
-        print('Ejecutando SFFS titanic.csv...')
+        print('Ejecutando SFFS para Titanic...')
         tabla,archivo_html = SFFS.algoritmo_sffs(datos,variable_predictora)
         archivo = open('resultados_titanic.html','w')
         archivo.write(archivo_html)
@@ -38,7 +38,7 @@ while archivo != '' and eleccion != '':
         print(tabla)
         break
     elif eleccion == 'SFFS' and archivo == 'BreastCancerDataset.csv':
-        print('Ejecutando SFFS con BreastCancerDataset.csv...')
+        print('Ejecutando SFFS para BreastCancerDataset...')
         tabla,archivo_html = SFFS.algoritmo_sffs(datos,variable_predictora)
         archivo = open('resultados_BreastCancer.html','w')
         archivo.write(archivo_html)
@@ -48,14 +48,39 @@ while archivo != '' and eleccion != '':
     
     elif eleccion == 'SFS': 
         D = input('Seleccione la cantidad de variables que desea probar (Si no especifica nada se probarán todas)\n')
-        if D == '':
-            print('Ejecutando SFS con todas las variables...')
+        if D == '' and archivo == 'titanic.csv':
+            print('Ejecutando SFS con todas las variables para Titanic...')
             D = len(variables)-2 #TODAS LAS ITERACIONES --> Excluyendo la variable resultado. 
-            print(SFS.algoritmo_sfs(datos,variable_predictora,D))
+            tabla, archivo_sfs = SFS.algoritmo_sfs(datos,variable_predictora,D)
+            archivo = open('resultado_sfs_titanic.html','w')
+            archivo.write(archivo_sfs)
+            archivo.close()
+            print(tabla)
             break
-        else: 
-            print('Ejecutando SFS con el valor D introducido...')
-            print(SFS.algoritmo_sfs(datos,variable_predictora,int(D)))
+        elif D == '' and archivo == 'BreastCancerDataset.csv':
+            print('Ejecutando SFS con todas las variables para BreastCancerDataset...')
+            D = len(variables)-2 #TODAS LAS ITERACIONES --> Excluyendo la variable resultado. 
+            tabla, archivo_sfs = SFS.algoritmo_sfs(datos,variable_predictora,D)
+            archivo = open('resultado_sfs_BreastCancer.html','w')
+            archivo.write(archivo_sfs)
+            archivo.close()
+            print(tabla)
+            break
+        elif D != '' and archivo == 'titanic.csv': 
+            print('Ejecutando SFS con el valor D introducido para Titanic...')
+            tabla, archivo_sfs = SFS.algoritmo_sfs(datos,variable_predictora,int(D))
+            archivo = open('resultado_sfs_titanic.html','w')
+            archivo.write(archivo_sfs)
+            archivo.close()
+            print(tabla)
+            break
+        elif D != '' and archivo == 'BreastCancerDataset.csv':
+            print('Ejecutando SFS con el valor D introducido para BreastCancerDataset...')
+            tabla, archivo_sfs = SFS.algoritmo_sfs(datos,variable_predictora,int(D))
+            archivo = open('resultado_sfs_BreastCancer.html','w')
+            archivo.write(archivo_sfs)
+            archivo.close()
+            print(tabla)
             break
     else:
         print('Has introducido un nombre de algoritmo incorrecto, vuelve a intentarlo las opciones son SFFS o SFS')

@@ -24,7 +24,9 @@ class SFS():
             Lista_ganancias.append(ganancia_solucion_actual)
             diccionario_resultado[ganancia_solucion_actual] = Lista[k]
             k += 1
-        return impdatos.Imprimir.datos_ordenados(diccionario_resultado)
+        archivo_sfs = impdatos.Imprimir.mostrar_datos_en_html(diccionario_resultado)
+        tabla = impdatos.Imprimir.datos_ordenados(diccionario_resultado) 
+        return tabla,archivo_sfs
 
 
     def calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual):
