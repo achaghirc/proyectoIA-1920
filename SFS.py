@@ -12,7 +12,6 @@ class SFS():
         k=0
         solucion_actual = []
         Lista = []
-        Lista_ganancias = []
         diccionario_resultado = {}
         while k<D:
             variable_elegida = SFS.calcular_mejor_variable(datos, variables, variable_predictora, solucion_actual)
@@ -21,7 +20,6 @@ class SFS():
             atributos_de_la_solucion = datos[solucion_actual]
             ganancia_solucion_actual = promedio.evaluacion_robusta.validacion_cruzada(datos,atributos_de_la_solucion, 15, 10)
             Lista.append(solucion_actual[:])
-            Lista_ganancias.append(ganancia_solucion_actual)
             diccionario_resultado[ganancia_solucion_actual] = Lista[k]
             k += 1
         archivo_sfs = impdatos.Imprimir.mostrar_datos_en_html(diccionario_resultado)

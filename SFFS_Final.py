@@ -11,25 +11,25 @@ class SFFS():
     
     def algoritmo_sffs(datos,variable_predictora):
         variables = datos.columns.tolist()
-        variable_predictora = variables[-1]
         variables.remove(variable_predictora)
         solucion_actual = []
         añadidas = []
         eliminadas = []
-        diccionario_resultado = {}
+        diccionario_sol_finales = {}
+        diccionario_todas_soluciones = {}
         k = 0
         lista_solucion = []
         lista_ganancia = []
         print('Mostrando Traza ...')
         while len(añadidas) < len(variables): 
-            mejor_variable,mejor_solucion_temporal,rendimiento = SFFS.calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual,15,10,añadidas)
+            mejor_variable,mejor_solucion_temporal,rendimiento = SFFS.calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual,añadidas)
             solucion_actual = mejor_solucion_temporal[:]
             añadidas.append(mejor_variable)
             print('La solucion antes de eliminar es ',solucion_actual,'con ganancia de ',rendimiento)
             if(len(solucion_actual)<=2):
                 lista_solucion.append(solucion_actual[:])
                 lista_ganancia.append(rendimiento)
-                diccionario_resultado[rendimiento] = solucion_actual[:]
+                diccionario_sol_finales[rendimiento] = solucion_actual[:]
                 k += 1
             if(len(solucion_actual)>2):
                 peor_variable,nuevo_rendimiento,solucion_temporal = SFFS.calcular_peor_variable(datos,variable_predictora,solucion_actual,eliminadas)
@@ -39,14 +39,14 @@ class SFFS():
                     solucion_actual = solucion_temporal[:]
                     rendimiento = nuevo_rendimiento
                     eliminadas.append(peor_variable)
-                    diccionario_resultado[rendimiento] = solucion_actual[:]
+                    diccionario_sol_finales[rendimiento] = solucion_actual[:]
                     lista_solucion.append(solucion_actual[:])
                     lista_ganancia.append(rendimiento)
                     print('Solucion tras eliminar es ',solucion_actual,'con ganancia de ',rendimiento,'\n')
                 else:    
                     lista_solucion.append(solucion_actual[:])
                     lista_ganancia.append(rendimiento)
-                    diccionario_resultado[rendimiento] = solucion_actual[:]
+                    diccionario_sol_finales[rendimiento] = solucion_actual[:]
                     print('Solucion sin eliminar es ',solucion_actual,'con ganancia de ',rendimiento,'\n')
                     k += 1
             #Comprobamos la condicion de parada
@@ -56,14 +56,14 @@ class SFFS():
         print('Lista de añadidas ', añadidas)
         print('Lista de eliminadas ', eliminadas,'\n')
         
-        diccionario_archivo = {} 
+         
         for i in range(len(lista_solucion)):
             print('Solucion ',lista_solucion[i],' con ganancia ', lista_ganancia[i], ' con tamaño', len(lista_solucion[i]))
             ganancia = lista_ganancia[i]
-            diccionario_archivo[ganancia] = lista_solucion[i]
+            diccionario_todas_soluciones[ganancia] = lista_solucion[i]
         print('Fin de la Traza.')
-        archivo_html = Imprimir.mostrar_datos_en_html(diccionario_archivo)
-        tabla = Imprimir.datos_ordenados(diccionario_resultado)
+        archivo_html = Imprimir.mostrar_datos_en_html(diccionario_todas_soluciones)
+        tabla = Imprimir.datos_ordenados(diccionario_sol_finales)
         return tabla,archivo_html
         
     def calcular_peor_variable(datos,variable_predictora,solucion_actual,eliminadas):
@@ -80,16 +80,16 @@ class SFFS():
                 if(nuevo_rendimiento>rendimiento_res):
                     peor_variable = variable
                     rendimiento_res = nuevo_rendimiento
+                    i += 1
                 else:
                     i += 1
                 solucion_temporal = solucion_actual[:]
-                i += 1
             else:
                 i += 1
         solucion_temporal.remove(peor_variable)
         return peor_variable,rendimiento_res,solucion_temporal    
         
-    def calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual,N_Exp,CV,añadidas):
+    def calcular_mejor_variable(datos,variables,variable_predictora,solucion_actual,añadidas):
         tam = len(variables)
         ac = 0
         solucion_temporal = solucion_actual[:]
@@ -99,7 +99,7 @@ class SFFS():
             if((variable not in solucion_actual) and (variable not in añadidas)):
                 solucion_temporal.append(variable)
                 atributos_a_probar = datos[solucion_temporal]
-                rendimiento = evaluacion.validacion_cruzada(datos,atributos_a_probar,N_Exp,CV)
+                rendimiento = evaluacion.validacion_cruzada(datos,atributos_a_probar,15,10)
                 if(rendimiento > ac):
                     mejor_variable = variable
                     ac = rendimiento
