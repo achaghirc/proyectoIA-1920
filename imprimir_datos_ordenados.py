@@ -21,13 +21,13 @@ class Imprimir():
     def datos_ordenados(diccionario_resultado):
         diccionario_sorted = sorted(diccionario_resultado.items(),key=operator.itemgetter(0),reverse=True)
         print('\n\t\t\t SOLUCION GUARDADA: ')
-        Lista = []
-        ListaPrueba = diccionario_sorted[:]
-        tam = len(ListaPrueba)
+        lista_final = []
+        lista_valores = diccionario_sorted[:]
+        tam = len(lista_valores)
         for i in range(tam-1):
-            elemento = ListaPrueba[i]
-            if elemento[1] not in Lista:
-                Lista.append(elemento[1][:])
+            elemento = lista_valores[i]
+            if elemento[1] not in lista_final:
+                lista_final.append(elemento[1][:])
             else:
                 diccionario_sorted.remove(elemento)
         df = [['Mejor Solucion','Tamaño','Rendimiento']]

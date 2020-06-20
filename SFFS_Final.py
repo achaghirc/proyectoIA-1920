@@ -55,8 +55,6 @@ class SFFS():
                     break
         print('Lista de añadidas ', añadidas)
         print('Lista de eliminadas ', eliminadas,'\n')
-        
-         
         for i in range(len(lista_solucion)):
             print('Solucion ',lista_solucion[i],' con ganancia ', lista_ganancia[i], ' con tamaño', len(lista_solucion[i]))
             ganancia = lista_ganancia[i]
@@ -80,9 +78,7 @@ class SFFS():
                 if(nuevo_rendimiento>rendimiento_res):
                     peor_variable = variable
                     rendimiento_res = nuevo_rendimiento
-                    i += 1
-                else:
-                    i += 1
+                i += 1
                 solucion_temporal = solucion_actual[:]
             else:
                 i += 1
